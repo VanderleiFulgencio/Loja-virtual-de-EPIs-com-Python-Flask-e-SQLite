@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="sucesso">
+    <h1>✅ Pedido realizado!</h1>
+    <p>Seu pedido nº <strong>{{ pedido_id }}</strong> foi registrado com sucesso.</p>
+    <a href="{{ url_for('index') }}">Continuar comprando</a>
+</div>
+{% endblock %}

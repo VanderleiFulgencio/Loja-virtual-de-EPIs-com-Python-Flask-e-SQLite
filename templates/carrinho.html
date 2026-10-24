@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Seu carrinho</h1>
+
+{% if itens %}
+<table>
+    <thead>
+        <tr><th>Produto</th><th>Qtd</th><th>Subtotal</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for item in itens %}
+        <tr>
+            <td>{{ item.produto['nome'] }}</td>
+            <td>{{ item.qtd }}</td>
+            <td>{{ item.subtotal | brl }}</td>
+            <td>
+                <form method="post" action="{{ url_for('remover', produto_id=item.produto['id']) }}">
+                    <button class="perigo" type="submit">Remover</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Total: {{ total | brl }}</h2>
+
+<form method="post" action="{{ url_for('finalizar') }}" class="checkout">
+    <h3>Finalizar pedido</h3>
+    <input type="text" name="nome" placeholder="Seu nome" required>
+    <input type="email" name="email" placeholder="Seu e-mail" required>
+    <button type="submit">Confirmar pedido</button>
+</form>
+
+{% else %}
+<p>Seu carrinho está vazio.</p>
+<a href="{{ url_for('index') }}">← Voltar para a loja</a>
+{% endif %}
+{% endblock %}

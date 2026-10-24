@@ -1,0 +1,78 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+}
+
+header {
+    background: #f5a623;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo { font-size: 1.4rem; font-weight: bold; color: #222; text-decoration: none; }
+
+.btn-carrinho {
+    background: #222;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+h1 { margin-bottom: 16px; }
+
+.filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.filtros a {
+    padding: 6px 14px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    color: #222;
+    text-decoration: none;
+}
+.filtros a.ativo { background: #222; color: #fff; }
+
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tag { font-size: 0.75rem; background: #fff3d6; color: #8a5a00; padding: 2px 8px; border-radius: 10px; align-self: flex-start; }
+.preco { font-size: 1.3rem; color: #1b7f3b; }
+
+button {
+    background: #f5a623;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover { background: #d98f14; }
+button.perigo { background: #d9534f; color: #fff; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 16px; }
+th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+
+.checkout { background: #fff; padding: 20px; border-radius: 10px; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; max-width: 400px; }
+.checkout input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+
+.sucesso { text-align: center; padding: 40px 0; }
+footer { text-align: center; padding: 24px; color: #777; }

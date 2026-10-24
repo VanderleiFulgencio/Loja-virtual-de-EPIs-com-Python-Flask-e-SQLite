@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Equipamentos de Proteção Individual</h1>
+
+<nav class="filtros">
+    <a href="{{ url_for('index') }}" class="{{ 'ativo' if not ativa }}">Todos</a>
+    {% for c in categorias %}
+        <a href="{{ url_for('index', categoria=c['categoria']) }}"
+           class="{{ 'ativo' if ativa == c['categoria'] }}">
+            {{ c['categoria'] }}
+        </a>
+    {% endfor %}
+</nav>
+
+<section class="grade">
+    {% for p in produtos %}
+    <article class="card">
+        <span class="tag">{{ p['categoria'] }}</span>
+        <h3>{{ p['nome'] }}</h3>
+        <p>{{ p['descricao'] }}</p>
+        <strong class="preco">{{ p['preco'] | brl }}</strong>
+        <form method="post" action="{{ url_for('adicionar', produto_id=p['id']) }}">
+            <button type="submit">Adicionar ao carrinho</button>
+        </form>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}
