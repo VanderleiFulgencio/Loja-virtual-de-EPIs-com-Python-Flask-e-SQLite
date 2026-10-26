@@ -1,10 +1,15 @@
+import os
 import sqlite3
+
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, g
 
-app = Flask(__name__)
-app.secret_key = "troque-esta-chave-depois"
-DATABASE = "loja.db"
+load_dotenv()  # lê o arquivo .env
 
+app = Flask(__name__)
+
+app.secret_key = os.environ.get("SECRET_KEY", "chave-so-para-desenvolvimento")
+DATABASE = "loja.db"
 # ---------- Banco de dados ----------
 def get_db():
     if "db" not in g:
@@ -150,6 +155,7 @@ def sucesso(pedido_id):
     return render_template("sucesso.html", pedido_id=pedido_id)
 
 
+init_db()
+
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
