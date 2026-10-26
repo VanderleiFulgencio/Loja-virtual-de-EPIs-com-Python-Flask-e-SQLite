@@ -1,15 +1,21 @@
 import os
+import re
 import sqlite3
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session, g
+from flask_wtf.csrf import CSRFProtect
+from flask import Flask, render_template, request, redirect, url_for, session, g, flash
 
 load_dotenv()  # lê o arquivo .env
 
 app = Flask(__name__)
 
 app.secret_key = os.environ.get("SECRET_KEY", "chave-so-para-desenvolvimento")
+
+csrf = CSRFProtect(app)
+
 DATABASE = "loja.db"
+EMAIL_REGEX = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 # ---------- Banco de dados ----------
 def get_db():
     if "db" not in g:
@@ -135,6 +141,18 @@ def finalizar():
     if not carrinho:
         return redirect(url_for("index"))
 
+    # strip() tira espaços das pontas; lower() deixa o e-mail em minúsculas
+    nome = request.form.get("nome", "").strip()
+    email = request.form.get("email", "").strip().lower()
+
+    if len(nome) < 3 or len(nome) > 100:
+        flash("Informe seu nome completo (entre 3 e 100 caracteres).")
+        return redirect(url_for("ver_carrinho"))
+
+    if len(email) > 120 or not EMAIL_REGEX.match(email):
+        flash("Informe um e-mail válido, por exemplo: nome@exemplo.com.")
+        return redirect(url_for("ver_carrinho"))
+
     total = 0
     for pid, qtd in carrinho.items():
         produto = db.execute("SELECT preco FROM produtos WHERE id = ?", (pid,)).fetchone()
@@ -143,7 +161,7 @@ def finalizar():
 
     cursor = db.execute(
         "INSERT INTO pedidos (cliente, email, total) VALUES (?, ?, ?)",
-        (request.form["nome"], request.form["email"], total),
+        (nome, email, total),
     )
     db.commit()
     session.pop("carrinho", None)

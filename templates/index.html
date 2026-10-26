@@ -21,6 +21,7 @@
         <p>{{ p['descricao'] }}</p>
         <strong class="preco">{{ p['preco'] | brl }}</strong>
         <form method="post" action="{{ url_for('adicionar', produto_id=p['id']) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit">Adicionar ao carrinho</button>
         </form>
     </article>

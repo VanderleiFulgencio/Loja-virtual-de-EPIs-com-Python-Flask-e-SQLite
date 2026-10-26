@@ -76,3 +76,10 @@ th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
 
 .sucesso { text-align: center; padding: 40px 0; }
 footer { text-align: center; padding: 24px; color: #777; }
+
+.erro {
+    color: #b00020;
+    background: #fdecea;
+    padding: 8px 12px;
+    border-radius: 6px;
+}

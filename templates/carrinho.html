@@ -16,6 +16,7 @@
             <td>{{ item.subtotal | brl }}</td>
             <td>
                 <form method="post" action="{{ url_for('remover', produto_id=item.produto['id']) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button class="perigo" type="submit">Remover</button>
                 </form>
             </td>
@@ -24,12 +25,19 @@
     </tbody>
 </table>
 
+{% with mensagens = get_flashed_messages() %}
+  {% for m in mensagens %}
+    <p class="erro">{{ m }}</p>
+  {% endfor %}
+{% endwith %}
+
 <h2>Total: {{ total | brl }}</h2>
 
 <form method="post" action="{{ url_for('finalizar') }}" class="checkout">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <h3>Finalizar pedido</h3>
-    <input type="text" name="nome" placeholder="Seu nome" required>
-    <input type="email" name="email" placeholder="Seu e-mail" required>
+    <input type="text" name="nome" placeholder="Seu nome" required minlength="3" maxlength="100">
+<input type="email" name="email" placeholder="Seu e-mail" required maxlength="120">
     <button type="submit">Confirmar pedido</button>
 </form>
 
