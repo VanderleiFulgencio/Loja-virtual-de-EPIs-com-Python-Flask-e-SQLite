@@ -2,3 +2,4 @@
 venv/
 __pycache__/
 *.db
+.envgit commit -m "Melhora README e adiciona requirements"
